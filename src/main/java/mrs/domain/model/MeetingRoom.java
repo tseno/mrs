@@ -8,6 +8,7 @@ public class MeetingRoom implements Serializable {
 	
 	/**
 	 * ID
+	 * 主キー、自動採番
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

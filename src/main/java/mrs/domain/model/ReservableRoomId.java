@@ -24,9 +24,12 @@ public class ReservableRoomId implements Serializable {
 		
 	}
 	
+	/***
+	 * ハッシュコード
+	 */
 	@Override
 	public int hashCode() {
-		final int prime = 3;
+		final int prime = 31;
 		int result = 1;
 		
 		result = prime * result + ((reservedDate == null) ? 0: reservedDate.hashCode());
@@ -34,6 +37,7 @@ public class ReservableRoomId implements Serializable {
 
 		return result;
 	}
+	
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -46,12 +50,16 @@ public class ReservableRoomId implements Serializable {
 		ReservableRoomId other = (ReservableRoomId) obj;
 		if (reservedDate == null) {
 			if (other.reservedDate != null) return false;
-		} else if (!reservedDate.equals(other.reservedDate)) {
+		} else if (!reservedDate.equals(other.reservedDate))
 			return false;
-		}
-	
+		
+		if (roomId == null) {
+			if (other.roomId != null) return false;
+		} else if (!roomId.equals(other.roomId))
+			return false;
 
 		return true;
+		
 	}
 
 
