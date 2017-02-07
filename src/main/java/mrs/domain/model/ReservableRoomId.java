@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Type;
+
 @Embeddable
 public class ReservableRoomId implements Serializable {
 	
