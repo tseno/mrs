@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.method.P;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,15 +75,15 @@ public class ReservationService {
 		
 	}
 	
-	public void cancel(Integer reservationId, User requestUser) {
-		Reservation reservation = reservationRepository.findOne(reservationId);
-		
-		if (RoleName.ADMIN != requestUser.getRoleName() && !Objects.equals(reservation.getUser().getUserId(), requestUser.getUserId())) {
-			throw new IllegalStateException("要求されたキャンセルは許可できません。");
-		}
+	@PreAuthorize("hasRole('ADMIN') or #reservation.user.userId == principal.user.userId")
+	public void cancel(@P("reservation") Reservation reservation) {
 		
 		reservationRepository.delete(reservation);
 		
+	}
+	
+	public Reservation findOne(Integer reservationId) {
+		return reservationRepository.findOne(reservationId);
 	}
 	
 
